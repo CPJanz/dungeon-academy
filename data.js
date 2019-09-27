@@ -1,41 +1,91 @@
 export const faces = {
-  blob: { type: "Red", value: -1 },
-  colossus: { type: "Red", value: -2 },
-  healthPotion: { type: "Red", value: 1 },
-  ghost: { type: "Blue", value: -1 },
-  reaper: { type: "Blue", value: -2 },
-  manaPotion: { type: "Blue", value: 1 },
+  blob: { type: "red", value: -1, name: "Blob" },
+  colossus: { type: "red", value: -2, name: "Colossus" },
+  healthPotion: { type: "red", value: 1, name: "Health Potion" },
+  ghost: { type: "blue", value: -1, name: "Ghost" },
+  reaper: { type: "blue", value: -2, name: "Reaper" },
+  manaPotion: { type: "blue", value: 1, name: "Mana Potion" },
   troll: {
-    type: "Red",
+    type: "red",
     value: -3,
-    function(player) {
-      player[this.type].current += this.value;
-      if (player[this.type] >= 0) {
+    addendum: function(player) {
+      if (player[this.type].current >= 0) {
         player[this.type].current = player[this.type].max;
         player.gold += 3;
       }
-    }
+    },
+    name: "Troll"
   },
   lich: {
-    type: ["Blue"],
+    type: "blue",
     value: -3,
-    function(player) {
-      player[this.type].current += this.value;
-      if (player[this.type] >= 0) {
+    addendum: function(player) {
+      if (player[this.type].current >= 0) {
         player[this.type].current = player[this.type].max;
         player.gold += 3;
       }
-    }
+    },
+    name: "Lich"
   },
   dragon: {
-    type: ["Red", "Blue"],
+    type: ["red", "blue"],
     value: -3,
-    function(player) {
-      player[this.type].current += this.value;
-      if (player[this.type] >= 0) {
+    addendum: function(player) {
+      let result = true;
+      this.type.every(e => {
+        if (player[e].current < 0) {
+          result = false;
+        }
+      });
+      if (result === true) {
         player[this.type].current = player[this.type].max;
         player.gold += 3;
       }
-    }
+    },
+    name: "Dragon"
+  },
+  chest: {
+    type: [],
+    value: 0,
+    addendum: function(player) {
+      player.gold += 2;
+    },
+    name: "Chest"
+  },
+  deadEnd: {
+    //TODO: YOu cannot move through this room
+  },
+  key: {
+    //TODO: You must move through this room to be able to exit the dungeon
+  },
+  crossRoad: {
+    type: [],
+    value: 0,
+    name: "Crossroad"
+  },
+  bananaPeel: {
+    type: [],
+    value: 0,
+    addendum: function(player) {
+      player.gold += -1;
+    },
+    name: "Banana Peel"
+  },
+  purse: {
+    type: [],
+    value: 0,
+    addendum: function(player) {
+      player.gold += 1;
+    },
+    name: "Purse"
+  },
+  corridor1: {
+    //TODO: Limit exits
+  },
+  corridor2: {
+    //TODO: Limit exits
+  },
+  corridor3: {
+    //TODO: Limit exits
   }
 };

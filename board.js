@@ -1,4 +1,5 @@
-class Board {
+import { Die } from "./die.js";
+export default class Board {
   constructor(boardDimension, specialDice) {
     [this.columns, this.rows] = boardDimension;
     this.dice = [];
